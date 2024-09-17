@@ -63,7 +63,7 @@ const TrackReferral = () => {
           {activeSection === "totalReferrals" ? (
             <ContactList contacts={referralsData} onPress={() => {}} />
           ) : (
-            <ContactListBar contacts={moneyEarnedData} />
+            <ContactListBar contacts={referralsData} />
           )}
         </View>
       </View>
