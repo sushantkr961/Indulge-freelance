@@ -7,13 +7,12 @@ import { SafeAreaView } from "react-native-safe-area-context"; // To avoid overl
 const App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <StatusBar
+      <StatusBar
         barStyle="light-content"
         backgroundColor="#0F0F15"
         translucent={true}
         showHideTransition={'slide'}
-        // hidden={true}
-      /> */}
+      />
       <NavigationContainer>
         <Navigation />
       </NavigationContainer>

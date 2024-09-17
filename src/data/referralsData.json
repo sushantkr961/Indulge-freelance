@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Contact Name 1",
+    "phone": "+91 89876 67654",
+    "status": "Referred"
+  },
+  {
+    "id": "2",
+    "name": "Contact Name 2",
+    "phone": "+91 89876 67654",
+    "status": "Ongoing"
+  },
+  {
+    "id": "3",
+    "name": "Contact Name 3",
+    "phone": "+91 89876 67654",
+    "status": "Onboarded"
+  },
+  {
+    "id": "4",
+    "name": "Contact Name 4",
+    "phone": "+91 89876 67654",
+    "status": "Declined"
+  }
+]

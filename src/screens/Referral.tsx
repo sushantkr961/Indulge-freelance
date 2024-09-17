@@ -3,15 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   ImageBackground,
   StatusBar,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/types";
 import BackButton from "../components/BackButton";
-// import { SafeAreaView } from "react-native-safe-area-context";
+import ReferButton from "../components/ReferButton";
 
 type ReferralScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -22,10 +22,16 @@ type Props = {
   navigation: ReferralScreenNavigationProp;
 };
 
+const { width, height } = Dimensions.get("window");
+
 const Referral = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
-      {/* <StatusBar translucent={true} backgroundColor={"#65635A"} /> */}
+      <StatusBar
+        backgroundColor="#626059"
+        barStyle="dark-content"
+        translucent={true}
+      />
       <BackButton />
 
       <ImageBackground
@@ -35,12 +41,32 @@ const Referral = ({ navigation }: Props) => {
       ></ImageBackground>
 
       <View style={styles.bottomContainer}>
-        <Text style={styles.title}>Refer and Earn</Text>
-        <Text style={styles.description}>
-          If you haven't registered for bidding with us before, we recommend
-          initiating the registration process at least four business days before
-          the auction to ensure a smooth experience.
-        </Text>
+        <View style={styles.textBox}>
+          <Text style={styles.title}>Refer and Earn</Text>
+          <Text style={styles.description}>
+            If you haven't registered for bidding with us before, we recommend
+            initiating the registration process at least four business days
+            before the auction to ensure a smooth experience.
+          </Text>
+        </View>
+        <View style={styles.buttonGroup}>
+          <ReferButton
+            onPress={() => navigation.navigate("ReferFriend")}
+            title="Invite your Friends"
+            imageSource={require("../../assets/images/money-wings.png")}
+          />
+          <ReferButton
+            onPress={() => navigation.navigate("TrackReferral")}
+            title="Track Referral"
+            imageSource={require("../../assets/images/map-location.png")}
+          />
+        </View>
+        <ReferButton
+          onPress={() => {}}
+          title="WhatsApp"
+          imageSource={require("../../assets/images/whatsAppIcon.png")}
+          backgroundColor={"#32D851"}
+        />
       </View>
     </SafeAreaView>
   );
@@ -55,22 +81,36 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 0.5,
-    // justifyContent: "flex-start",
   },
   bottomContainer: {
-    flex: 0.5, // Takes up the remaining half
+    flex: 0.5,
     backgroundColor: "#0F0F15",
-    padding: 20, // Add padding for content inside the bottom view
+    padding: width * 0.05,
+    marginTop: -10,
+  },
+  textBox: {
+    paddingVertical: height * 0.02,
+    marginBottom: height * 0.04,
   },
   title: {
-    fontSize: 24,
-    color: "#D4AF37", // Gold color for title
-    fontWeight: "bold",
-    marginBottom: 10,
+    fontFamily: "JosefinSans-Regular",
+    fontSize: width * 0.06,
+    fontWeight: "400",
+    lineHeight: width * 0.09,
+    textAlign: "left",
+    color: "#D39F3A",
+    marginBottom: height * 0.02,
   },
   description: {
-    fontSize: 14,
+    fontFamily: "JosefinSans-Regular",
+    fontSize: width * 0.037,
+    fontWeight: "400",
+    lineHeight: width * 0.05,
+    textAlign: "left",
     color: "#ffffff",
-    lineHeight: 22,
+  },
+  buttonGroup: {
+    flexDirection: "column",
+    marginBottom: height * 0.02,
   },
 });

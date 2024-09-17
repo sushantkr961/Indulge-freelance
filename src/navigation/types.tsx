@@ -3,4 +3,5 @@ export type RootStackParamList = {
   Referral: undefined;
   ReferFriend: undefined;
   TrackReferral: undefined;
+  ReferFriendForm: { contact: { id: string; name: string; phone: string } };
 };

@@ -1,6 +1,8 @@
 package com.indulge
 
 import android.os.Bundle;
+import android.os.Build
+import android.view.View
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled

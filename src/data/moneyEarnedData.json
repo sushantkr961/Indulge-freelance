@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Contact Name 1",
+    "phone": "+91 89876 67654",
+    "amount": "₹ 10,000"
+  },
+  {
+    "id": "2",
+    "name": "Contact Name 2",
+    "phone": "+91 89876 67654",
+    "amount": "₹ 20,000"
+  },
+  {
+    "id": "3",
+    "name": "Contact Name 3",
+    "phone": "+91 89876 67654",
+    "amount": "₹ 10,000"
+  },
+  {
+    "id": "4",
+    "name": "Contact Name 4",
+    "phone": "+91 89876 67654",
+    "amount": "₹ 20,000"
+  }
+]

@@ -1,37 +1,63 @@
 import React from "react";
-import { TouchableOpacity, Image, StyleSheet } from "react-native";
+import { TouchableOpacity, Image, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const BackButton = () => {
+type Props = {
+  title?: string;
+};
+
+const BackButton = ({ title }: Props) => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   return (
-    <TouchableOpacity
-      onPress={() => navigation.goBack()}
-      style={[styles.backButton, { marginTop: insets.top + 10 }]}
-      accessible={true}
-      accessibilityLabel="Go back"
-    >
-      <Image
-        source={require("../../assets/images/BackArrow.png")}
-        style={styles.backImage}
-      />
-    </TouchableOpacity>
+    <View style={[styles.container, { marginTop: insets.top + 10 }]}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+        accessible={true}
+        accessibilityLabel="Go back"
+      >
+        <Image
+          source={require("../../assets/images/BackArrow.png")}
+          style={styles.backImage}
+        />
+      </TouchableOpacity>
+      {title && <Text style={styles.headerTitle}>{title}</Text>}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  backButton: {
-    position: 'absolute',
+  container: {
+    position: "absolute",
     zIndex: 99,
-    left: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    left: 20,
+    top: 10,
     // borderWidth: 1,
+    // borderColor: "white",
+  },
+  backButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
   },
   backImage: {
-    width: 40,
-    height: 40,
+    width: 42,
+    height: 42,
+    // borderWidth: 1,
+    // borderColor: 'white'
+  },
+  headerTitle: {
+    fontFamily: "Nunito-Regular",
+    fontSize: 16,
+    fontWeight: "400",
+    // lineHeight: 20,
+    textAlign: "left",
+    color: "#ffffff",
   },
 });
 
