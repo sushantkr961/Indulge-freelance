@@ -22,26 +22,61 @@ type Props = {
 const { width, height } = Dimensions.get("window");
 
 const ContactListBar = ({ contacts }: Props) => {
+  const CircleWithTriangle = ({
+    position,
+    backgroundColor,
+    innerColor,
+    showLeftTriangle,
+    showRightTriangle,
+    offset,
+  }: {
+    position: "left" | "right";
+    backgroundColor: string;
+    innerColor: string;
+    showLeftTriangle?: boolean;
+    showRightTriangle?: boolean;
+    offset?: string;
+  }) => (
+    <View
+      style={[
+        styles.progressOuterCircle,
+        { [position]: offset ?? 0, backgroundColor: backgroundColor },
+      ]}
+    >
+      {showLeftTriangle && (
+        <View
+          style={[styles.leftTriangle, { borderRightColor: backgroundColor }]}
+        />
+      )}
+      {showRightTriangle && (
+        <View
+          style={[styles.rightTriangle, { borderLeftColor: backgroundColor }]}
+        />
+      )}
+      <View
+        style={[styles.progressInnerCircle, { backgroundColor: innerColor }]}
+      />
+    </View>
+  );
+
   const renderItem = ({ item }: { item: Contact }) => {
-    let progress = 0;
-    if (item.status === "Referred") {
-      progress = 0.0;
-    } else if (item.status === "Ongoing") {
+    let progress = 0.0;
+    if (item.status === "Ongoing") {
       progress = 0.5;
     } else if (item.status === "Onboarded") {
       progress = 1.0;
     }
 
-    const outerCircleColor1 =
-      item.status === "Referred" ||
-      item.status === "Ongoing" ||
-      item.status === "Onboarded"
-        ? "#D9D9D9"
-        : "#1A1A23";
-    const outerCircleColor2 =
-      item.status === "Ongoing" || item.status === "Onboarded"
-        ? "#D9D9D9"
-        : "#1A1A23";
+    const outerCircleColor1 = ["Referred", "Ongoing", "Onboarded"].includes(
+      item.status ?? ""
+    )
+      ? "#D9D9D9"
+      : "#1A1A23";
+    const outerCircleColor2 = ["Ongoing", "Onboarded"].includes(
+      item.status ?? ""
+    )
+      ? "#D9D9D9"
+      : "#1A1A23";
     const outerCircleColor3 =
       item.status === "Onboarded" ? "#D9D9D9" : "#1A1A23";
 
@@ -61,12 +96,7 @@ const ContactListBar = ({ contacts }: Props) => {
         <View style={styles.progressBarContainer}>
           <View style={styles.progressLineContainer}>
             <View style={styles.progressBar}>
-              <View
-                style={[
-                  styles.progressBarBackground,
-                  { backgroundColor: "#1A1A23" },
-                ]}
-              />
+              <View style={styles.progressBarBackground} />
               <View
                 style={[
                   styles.progressBarForeground,
@@ -75,89 +105,34 @@ const ContactListBar = ({ contacts }: Props) => {
               />
             </View>
 
-            {/* Left Circle with Right Triangle */}
-            <View
-              style={[
-                styles.progressOuterCircle,
-                { left: 0, backgroundColor: outerCircleColor1 },
-              ]}
-            >
-              <View
-                style={[
-                  styles.rightTriangle,
-                  { borderLeftColor: outerCircleColor1 },
-                ]}
-              />
-              <View
-                style={[
-                  styles.progressInnerCircle,
-                  {
-                    backgroundColor:
-                      item.status === "Referred" ||
-                      item.status === "Ongoing" ||
-                      item.status === "Onboarded"
-                        ? "#00A74D"
-                        : "#1A1A23",
-                  },
-                ]}
-              />
-            </View>
-
-            {/* Middle Circle with Left and Right Triangles */}
-            <View
-              style={[
-                styles.progressOuterCircle,
-                { left: "50%", backgroundColor: outerCircleColor2 },
-              ]}
-            >
-              <View
-                style={[
-                  styles.leftTriangle,
-                  { borderRightColor: outerCircleColor2 },
-                ]}
-              />
-              <View
-                style={[
-                  styles.rightTriangle,
-                  { borderLeftColor: outerCircleColor2 },
-                ]}
-              />
-              <View
-                style={[
-                  styles.progressInnerCircle,
-                  {
-                    backgroundColor:
-                      item.status === "Ongoing" || item.status === "Onboarded"
-                        ? "#D39F3A"
-                        : "#1A1A23",
-                  },
-                ]}
-              />
-            </View>
-
-            {/* Right Circle with Left Triangle */}
-            <View
-              style={[
-                styles.progressOuterCircle,
-                { right: 0, backgroundColor: outerCircleColor3 },
-              ]}
-            >
-              <View
-                style={[
-                  styles.leftTriangle,
-                  { borderRightColor: outerCircleColor3 },
-                ]}
-              />
-              <View
-                style={[
-                  styles.progressInnerCircle,
-                  {
-                    backgroundColor:
-                      item.status === "Onboarded" ? "#00A74D" : "#1A1A23",
-                  },
-                ]}
-              />
-            </View>
+            <CircleWithTriangle
+              position="left"
+              backgroundColor={outerCircleColor1}
+              innerColor={
+                ["Referred", "Ongoing", "Onboarded"].includes(item.status ?? "")
+                  ? "#00A74D"
+                  : "#1A1A23"
+              }
+              showRightTriangle
+            />
+            <CircleWithTriangle
+              position="left"
+              backgroundColor={outerCircleColor2}
+              innerColor={
+                ["Ongoing", "Onboarded"].includes(item.status ?? "")
+                  ? "#D39F3A"
+                  : "#1A1A23"
+              }
+              showLeftTriangle
+              showRightTriangle
+              offset="50%"
+            />
+            <CircleWithTriangle
+              position="right"
+              backgroundColor={outerCircleColor3}
+              innerColor={item.status === "Onboarded" ? "#00A74D" : "#1A1A23"}
+              showLeftTriangle
+            />
           </View>
 
           <View style={styles.statusLabels}>
@@ -231,6 +206,7 @@ const styles = StyleSheet.create({
   progressBarBackground: {
     height: "100%",
     width: "100%",
+    backgroundColor: "#1A1A23",
     position: "absolute",
   },
   progressBarForeground: {
