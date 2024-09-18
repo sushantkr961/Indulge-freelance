@@ -13,7 +13,6 @@ type Contact = {
   name: string;
   phone: string;
   status?: string;
-  //   status: "Referred" | "Ongoing" | "Onboarded" | "Declined";
 };
 
 type Props = {
@@ -23,69 +22,153 @@ type Props = {
 const { width, height } = Dimensions.get("window");
 
 const ContactListBar = ({ contacts }: Props) => {
-  const renderItem = ({ item }: { item: Contact }) => (
-    <View style={styles.contactContainer}>
-      <View style={styles.contactInfo}>
-        <Image
-          source={require("../../assets/images/download.png")}
-          style={styles.avatar}
-        />
-        <View>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.phone}>{item.phone}</Text>
-        </View>
-      </View>
+  const renderItem = ({ item }: { item: Contact }) => {
+    let progress = 0;
+    if (item.status === "Referred") {
+      progress = 0.0;
+    } else if (item.status === "Ongoing") {
+      progress = 0.5;
+    } else if (item.status === "Onboarded") {
+      progress = 1.0;
+    }
 
-      {/* Progress Bar */}
-      <View style={styles.progressBarContainer}>
-        <View style={styles.progressLine}>
-          {/* Status: Referred */}
-          <View
-            style={[
-              styles.progressDot,
-              {
-                backgroundColor:
-                  item.status === "Referred" ? "#00AA00" : "#888",
-              },
-            ]}
+    const outerCircleColor1 =
+      item.status === "Referred" ||
+      item.status === "Ongoing" ||
+      item.status === "Onboarded"
+        ? "#D9D9D9"
+        : "#1A1A23";
+    const outerCircleColor2 =
+      item.status === "Ongoing" || item.status === "Onboarded"
+        ? "#D9D9D9"
+        : "#1A1A23";
+    const outerCircleColor3 =
+      item.status === "Onboarded" ? "#D9D9D9" : "#1A1A23";
+
+    return (
+      <View style={styles.contactContainer}>
+        <View style={styles.contactInfo}>
+          <Image
+            source={require("../../assets/images/download.png")}
+            style={styles.avatar}
           />
-          {/* Line for Ongoing */}
-          <View style={styles.progressSegment}>
-            {/* Status: Ongoing */}
-            <View
-              style={[
-                styles.progressDot,
-                {
-                  backgroundColor:
-                    item.status === "Ongoing" ? "#D39F3A" : "#888",
-                },
-              ]}
-            />
-          </View>
-          {/* Line for Onboarded */}
-          <View style={styles.progressSegment}>
-            {/* Status: Onboarded */}
-            <View
-              style={[
-                styles.progressDot,
-                {
-                  backgroundColor:
-                    item.status === "Onboarded" ? "#333" : "#888",
-                },
-              ]}
-            />
+          <View>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.phone}>{item.phone}</Text>
           </View>
         </View>
 
-        {/* Status Labels */}
-        <View style={styles.statusLabels}>
-          <Text style={styles.statusLabel}>Referred</Text>
-          <Text style={styles.statusLabel}>Ongoing</Text>
-          <Text style={styles.statusLabel}>Onboarded</Text>
+        <View style={styles.progressBarContainer}>
+          <View style={styles.progressLineContainer}>
+            <View style={styles.progressBar}>
+              <View
+                style={[
+                  styles.progressBarBackground,
+                  { backgroundColor: "#1A1A23" },
+                ]}
+              />
+              <View
+                style={[
+                  styles.progressBarForeground,
+                  { width: `${progress * 100}%` },
+                ]}
+              />
+            </View>
+
+            {/* Left Circle with Right Triangle */}
+            <View
+              style={[
+                styles.progressOuterCircle,
+                { left: 0, backgroundColor: outerCircleColor1 },
+              ]}
+            >
+              <View
+                style={[
+                  styles.rightTriangle,
+                  { borderLeftColor: outerCircleColor1 },
+                ]}
+              />
+              <View
+                style={[
+                  styles.progressInnerCircle,
+                  {
+                    backgroundColor:
+                      item.status === "Referred" ||
+                      item.status === "Ongoing" ||
+                      item.status === "Onboarded"
+                        ? "#00A74D"
+                        : "#1A1A23",
+                  },
+                ]}
+              />
+            </View>
+
+            {/* Middle Circle with Left and Right Triangles */}
+            <View
+              style={[
+                styles.progressOuterCircle,
+                { left: "50%", backgroundColor: outerCircleColor2 },
+              ]}
+            >
+              <View
+                style={[
+                  styles.leftTriangle,
+                  { borderRightColor: outerCircleColor2 },
+                ]}
+              />
+              <View
+                style={[
+                  styles.rightTriangle,
+                  { borderLeftColor: outerCircleColor2 },
+                ]}
+              />
+              <View
+                style={[
+                  styles.progressInnerCircle,
+                  {
+                    backgroundColor:
+                      item.status === "Ongoing" || item.status === "Onboarded"
+                        ? "#D39F3A"
+                        : "#1A1A23",
+                  },
+                ]}
+              />
+            </View>
+
+            {/* Right Circle with Left Triangle */}
+            <View
+              style={[
+                styles.progressOuterCircle,
+                { right: 0, backgroundColor: outerCircleColor3 },
+              ]}
+            >
+              <View
+                style={[
+                  styles.leftTriangle,
+                  { borderRightColor: outerCircleColor3 },
+                ]}
+              />
+              <View
+                style={[
+                  styles.progressInnerCircle,
+                  {
+                    backgroundColor:
+                      item.status === "Onboarded" ? "#00A74D" : "#1A1A23",
+                  },
+                ]}
+              />
+            </View>
+          </View>
+
+          <View style={styles.statusLabels}>
+            <Text style={styles.statusLabel}>Referred</Text>
+            <Text style={styles.statusLabel}>Ongoing</Text>
+            <Text style={styles.statusLabel}>Onboarded</Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <FlatList
@@ -101,7 +184,7 @@ export default ContactListBar;
 
 const styles = StyleSheet.create({
   contactContainer: {
-    flexDirection: "column", // Change to column to place progress bar under the contact info
+    flexDirection: "column",
     padding: height * 0.02,
   },
   contactInfo: {
@@ -132,36 +215,79 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "#D9D9D9",
   },
-  progressBarContainer: {
-    marginTop: 10,
+  progressBarContainer: {},
+  progressLineContainer: {
+    position: "relative",
+    height: 25,
+    justifyContent: "center",
   },
-  progressLine: {
-    flexDirection: "row",
+  progressBar: {
+    height: 2,
+    width: "100%",
+    backgroundColor: "#1A1A23",
+    position: "relative",
+    overflow: "hidden",
+  },
+  progressBarBackground: {
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+  },
+  progressBarForeground: {
+    height: "100%",
+    backgroundColor: "#D9D9D9",
+    position: "absolute",
+    left: 0,
+  },
+  progressOuterCircle: {
+    position: "absolute",
+    top: "50%",
+    width: 12,
+    height: 12,
+    borderRadius: 8,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    height: 20,
+    transform: [{ translateY: -6 }],
+    zIndex: 1,
   },
-  progressSegment: {
-    flex: 1,
-    height: 4,
-    backgroundColor: "#444444",
-    marginHorizontal: 5,
-  },
-  progressDot: {
-    width: 10,
-    height: 10,
+  progressInnerCircle: {
+    width: 8,
+    height: 8,
     borderRadius: 5,
-    backgroundColor: "#888", // Default color
+  },
+  rightTriangle: {
+    position: "absolute",
+    right: -3,
+    width: 0,
+    height: 0,
+    borderTopWidth: 6,
+    borderBottomWidth: 6,
+    borderLeftWidth: 6,
+    borderTopColor: "transparent",
+    borderBottomColor: "transparent",
+  },
+  leftTriangle: {
+    position: "absolute",
+    left: -3,
+    width: 0,
+    height: 0,
+    borderTopWidth: 6,
+    borderBottomWidth: 6,
+    borderRightWidth: 6,
+    borderTopColor: "transparent",
+    borderBottomColor: "transparent",
   },
   statusLabels: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 5,
+    marginTop: -2,
   },
   statusLabel: {
     fontFamily: "JosefinSans-Regular",
-    fontSize: width * 0.03,
-    color: "#888888",
+    fontSize: 10,
+    color: "#D9D9D9",
+    lineHeight: 14,
+    fontWeight: "300",
   },
   separator: {
     height: 1,
