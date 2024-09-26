@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type SectionButtonProps = {
   title: string;
-  count: string;
+  count: number;
   isActive: boolean;
   onPress: () => void;
 };
