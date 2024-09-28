@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import SearchSvg from "../../assets/svg/Search";
 
 type Props = {
   placeholder?: string;
@@ -27,11 +28,8 @@ const SearchBox = ({
         placeholderTextColor="#373737"
         onChangeText={onSearch}
       />
-      <TouchableOpacity style={styles.searchIcon}>
-        <Image
-          source={require("../../assets/images/search.png")}
-          style={styles.icon}
-        />
+      <TouchableOpacity>
+        <SearchSvg width={width * 0.06} height={width * 0.06} />
       </TouchableOpacity>
     </View>
   );
@@ -57,13 +55,5 @@ const styles = StyleSheet.create({
     color: "#373737",
     fontFamily: "JosefinSans-Light",
     fontSize: width * 0.04,
-  },
-  searchIcon: {
-    padding: width * 0.02,
-  },
-  icon: {
-    width: width * 0.06,
-    height: width * 0.06,
-    tintColor: "#000000",
   },
 });

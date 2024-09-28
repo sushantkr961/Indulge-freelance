@@ -35,10 +35,10 @@ export const ReferFriendFormstyles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: "#D4AF37",
-    marginTop: 20,
+    marginTop: 10,
   },
   cancelButton: {
-    marginTop: 20,
+    marginTop: 10,
   },
   cancelButtonText: {
     fontFamily: "JosefinSans-Regular",

@@ -7,20 +7,32 @@ import { PersistGate } from "redux-persist/integration/react";
 import Navigation from "./src/navigation/Navigation";
 import store, { persistor } from "./src/StoreRedux/Store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const App = () => {
-  // Function to set the token in AsyncStorage when the app starts
   const setInitialToken = async () => {
     const initialToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWI3YjA3MWVlZjU3N2UyOTYyNzI2YjYiLCJpYXQiOjE3MjcwODYxODZ9.ZI0URGOPCQIyoxn6IZinVJdFTQBaZSqER1HfK4CGasI"; // Replace with the actual token you want to set
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWI3YjA3MWVlZjU3N2UyOTYyNzI2YjYiLCJpYXQiOjE3MjcwODYxODZ9.ZI0URGOPCQIyoxn6IZinVJdFTQBaZSqER1HfK4CGasI";
+
     try {
-      await AsyncStorage.setItem("token", initialToken);
-      console.log("Token set successfully");
+      const storedToken = await AsyncStorage.getItem("token");
+
+      if (!storedToken) {
+        await AsyncStorage.setItem("token", initialToken);
+        console.log("Token set successfully");
+      } else {
+        console.log("Token already exists:", storedToken);
+      }
     } catch (error) {
-      console.error("Error setting token:", error);
+      console.error("Error checking or setting token:", error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Could not set the token!",
+      });
     }
   };
-  // useEffect to set the token when the app starts
+
   useEffect(() => {
     setInitialToken();
   }, []);
@@ -39,6 +51,7 @@ const App = () => {
             <Navigation />
           </NavigationContainer>
         </SafeAreaView>
+        <Toast />
       </PersistGate>
     </Provider>
   );

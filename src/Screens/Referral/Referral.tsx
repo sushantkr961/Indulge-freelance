@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
   ImageBackground,
   StatusBar,
   SafeAreaView,
@@ -16,11 +15,9 @@ import BackButton from "../../Components/BackButton";
 import ReferButton from "../../Components/ReferButton";
 import { ReferralStyles as styles } from "./style";
 import WhatsappIconSvg from "../../../assets/svg/WhatsappIconSvg";
-import AuctionIconSvg from "../../../assets/svg/AuctionIconSvg";
-import GiftingSvg from "../../../assets/svg/HelpWithYouSvg/GiftingSvg";
-import TravelSvg from "../../../assets/svg/HelpWithYouSvg/TravelSvg";
-import ArrowTooltipSvg from "../../../assets/svg/ArrowTooltipSvg";
-import AuctionSvg from "../../../assets/svg/drawerSvg/AuctionSvg";
+import InviteFriendsSvg from "../../../assets/svg/ReferralSvg/InviteFriendsSvg";
+import TrackReferralSvg from "../../../assets/svg/ReferralSvg/TrackReferralSvg";
+import Toast from "react-native-toast-message";
 
 type ReferralScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -31,7 +28,6 @@ type Props = {
   navigation: ReferralScreenNavigationProp;
 };
 
-const { width, height } = Dimensions.get("window");
 
 const Referral = ({ navigation }: Props) => {
   const openWhatsApp = (phoneNumber: string) => {
@@ -41,11 +37,11 @@ const Referral = ({ navigation }: Props) => {
         if (supported) {
           Linking.openURL(whatsappUrl);
         } else {
-          ToastAndroid.showWithGravity(
-            "WhatsApp is not installed on your device.",
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM
-          );
+          Toast.show({
+            type: "error",
+            text1: "WhatsApp not installed",
+            text2: "Please install WhatsApp to use this feature.",
+          });
         }
       })
       .catch((err) => console.error("An error occurred", err));
@@ -76,31 +72,19 @@ const Referral = ({ navigation }: Props) => {
           </Text>
         </View>
         <View style={styles.buttonGroup}>
-          {/* <ReferButton
+          <ReferButton
             onPress={() => navigation.navigate("ReferFriend")}
             title="Invite your Friends"
-            imageSource={require("../../../assets/images/money-wings.png")}
+            Icon={InviteFriendsSvg}
+            iconHeight={20}
+            iconWidth={25}
           />
           <ReferButton
             onPress={() => navigation.navigate("TrackReferral")}
             title="Track Referral"
-            imageSource={require("../../../assets/images/map-location.png")}
-          /> */}
-          <ReferButton
-            onPress={() => navigation.navigate("ReferFriend")}
-            title="Invite your Friends"
-            Icon={WhatsappIconSvg}
-            iconHeight={25}
+            Icon={TrackReferralSvg}
+            iconHeight={20}
             iconWidth={25}
-            iconColor={"#FFFFFF"}
-          />
-          <ReferButton
-            onPress={() => navigation.navigate("TrackReferral")}
-            title="Track Referral"
-            Icon={AuctionSvg}
-            iconHeight={25}
-            iconWidth={25}
-            iconColor={"#FFFFFF"}
           />
         </View>
         <ReferButton

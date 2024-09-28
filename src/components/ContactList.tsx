@@ -100,6 +100,7 @@ export default ContactList;
 
 const styles = StyleSheet.create({
   contactContainer: {
+    flex:1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

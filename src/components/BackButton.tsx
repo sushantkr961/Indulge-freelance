@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity, Image, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import BackArrowSvg from "../../assets/svg/ReferralSvg/BackArrowSvg";
 
 type Props = {
   title?: string;
@@ -19,10 +20,7 @@ const BackButton = ({ title }: Props) => {
         accessible={true}
         accessibilityLabel="Go back"
       >
-        <Image
-          source={require("../../assets/images/BackArrow.png")}
-          style={styles.backImage}
-        />
+        <BackArrowSvg height={35} width={35} />
       </TouchableOpacity>
       {title && <Text style={styles.headerTitle}>{title}</Text>}
     </View>
@@ -44,12 +42,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
-  },
-  backImage: {
-    width: 42,
-    height: 42,
-    // borderWidth: 1,
-    // borderColor: 'white'
   },
   headerTitle: {
     fontFamily: "Nunito-Regular",
