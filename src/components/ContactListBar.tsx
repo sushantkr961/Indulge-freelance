@@ -11,7 +11,7 @@ import {
 type Contact = {
   id: string;
   name: string;
-  phone: string;
+  mobileNo: string | number;
   status?: string;
 };
 
@@ -61,24 +61,24 @@ const ContactListBar = ({ contacts }: Props) => {
 
   const renderItem = ({ item }: { item: Contact }) => {
     let progress = 0.0;
-    if (item.status === "Ongoing") {
+
+    const status = item.status === "paid" ? "Onboarded" : item.status;
+
+    if (status === "Ongoing") {
       progress = 0.5;
-    } else if (item.status === "Onboarded") {
+    } else if (status === "Onboarded") {
       progress = 1.0;
     }
 
     const outerCircleColor1 = ["Referred", "Ongoing", "Onboarded"].includes(
-      item.status ?? ""
+      status ?? ""
     )
       ? "#D9D9D9"
       : "#1A1A23";
-    const outerCircleColor2 = ["Ongoing", "Onboarded"].includes(
-      item.status ?? ""
-    )
+    const outerCircleColor2 = ["Ongoing", "Onboarded"].includes(status ?? "")
       ? "#D9D9D9"
       : "#1A1A23";
-    const outerCircleColor3 =
-      item.status === "Onboarded" ? "#D9D9D9" : "#1A1A23";
+    const outerCircleColor3 = status === "Onboarded" ? "#D9D9D9" : "#1A1A23";
 
     return (
       <View style={styles.contactContainer}>
@@ -89,7 +89,7 @@ const ContactListBar = ({ contacts }: Props) => {
           />
           <View>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.phone}>{item.phone}</Text>
+            <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
           </View>
         </View>
 
@@ -109,7 +109,7 @@ const ContactListBar = ({ contacts }: Props) => {
               position="left"
               backgroundColor={outerCircleColor1}
               innerColor={
-                ["Referred", "Ongoing", "Onboarded"].includes(item.status ?? "")
+                ["Referred", "Ongoing", "Onboarded"].includes(status ?? "")
                   ? "#00A74D"
                   : "#1A1A23"
               }
@@ -119,7 +119,7 @@ const ContactListBar = ({ contacts }: Props) => {
               position="left"
               backgroundColor={outerCircleColor2}
               innerColor={
-                ["Ongoing", "Onboarded"].includes(item.status ?? "")
+                ["Ongoing", "Onboarded"].includes(status ?? "")
                   ? "#D39F3A"
                   : "#1A1A23"
               }
@@ -130,7 +130,7 @@ const ContactListBar = ({ contacts }: Props) => {
             <CircleWithTriangle
               position="right"
               backgroundColor={outerCircleColor3}
-              innerColor={item.status === "Onboarded" ? "#00A74D" : "#1A1A23"}
+              innerColor={status === "Onboarded" ? "#00A74D" : "#1A1A23"}
               showLeftTriangle
             />
           </View>
@@ -149,7 +149,7 @@ const ContactListBar = ({ contacts }: Props) => {
     <FlatList
       data={contacts}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => item?.id ?? index.toString()}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
     />
   );

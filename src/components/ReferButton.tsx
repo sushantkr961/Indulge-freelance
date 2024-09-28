@@ -13,15 +13,23 @@ const { width, height } = Dimensions.get("window");
 type Props = {
   onPress: () => void;
   title: string;
-  imageSource: any;
+  // imageSource: any;
+  Icon: React.ElementType;
   backgroundColor?: string;
+  iconHeight?: number;
+  iconWidth?: number;
+  iconColor?: string;
 };
 
 const ReferButton = ({
   onPress,
   title,
-  imageSource,
   backgroundColor,
+  // imageSource,
+  Icon,
+  iconHeight,
+  iconWidth,
+  iconColor,
 }: Props) => {
   return (
     <View style={styles.buttonContainer}>
@@ -35,7 +43,8 @@ const ReferButton = ({
         ]}
         onPress={onPress}
       >
-        <Image source={imageSource} style={styles.buttonImage} />
+        {/* <Image source={imageSource} style={styles.buttonImage} /> */}
+        <Icon width={iconWidth} height={iconHeight} activeColor={iconColor} />
         <Text style={styles.buttonText}>{title}</Text>
       </TouchableOpacity>
     </View>
@@ -72,5 +81,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.04,
     color: "#ffffff",
     textAlign: "left",
+    marginLeft: width * 0.03,
   },
 });

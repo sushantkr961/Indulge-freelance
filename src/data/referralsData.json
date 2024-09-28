@@ -2,25 +2,21 @@
   {
     "id": "1",
     "name": "Contact Name 1",
-    "phone": "+91 89876 67654",
-    "status": "Referred"
+    "mobileNo": 9876543210
   },
   {
     "id": "2",
     "name": "Contact Name 2",
-    "phone": "+91 89876 67654",
-    "status": "Ongoing"
+    "mobileNo": 9876543212
   },
   {
     "id": "3",
     "name": "Contact Name 3",
-    "phone": "+91 89876 67654",
-    "status": "Onboarded"
+    "mobileNo": 9876543213
   },
   {
     "id": "4",
     "name": "Contact Name 4",
-    "phone": "+91 89876 67654",
-    "status": "Declined"
+    "mobileNo": 9876543214
   }
 ]

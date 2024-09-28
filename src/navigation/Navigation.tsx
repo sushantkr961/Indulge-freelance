@@ -3,23 +3,17 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import Referral from "../screens/Referral";
-import ReferFriends from "../screens/ReferFriends";
-import TrackReferral from "../screens/TrackReferral";
-import Home from "../screens/Home";
+import Referral from "../Screens/Referral/Referral";
+import ReferFriends from "../Screens/Referral/ReferFriends";
+import TrackReferral from "../Screens/Referral/TrackReferral";
 import { RootStackParamList } from "./types";
-import ReferFriendFrom from "../screens/ReferFriendFrom";
+import ReferFriendFrom from "../Screens/Referral/ReferFriendFrom";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   return (
     <Stack.Navigator initialRouteName="Referral">
-      {/* <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: "Home", headerShown: false }}
-      /> */}
       <Stack.Screen
         name="Referral"
         component={Referral}

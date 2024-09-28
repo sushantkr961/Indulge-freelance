@@ -1,0 +1,13 @@
+import React from 'react';
+import { SvgXml } from 'react-native-svg';
+
+const CalanderTolltipArrowSvg = ({ width, height, activeColor }: any) => {
+  const svgString = `<svg width="79" height="153" viewBox="0 0 79 153" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M78.4416 149.765C78.5711 150.009 78.4784 150.312 78.2345 150.442L74.2603 152.552C74.0164 152.682 73.7137 152.589 73.5841 152.345C73.4546 152.101 73.5473 151.799 73.7912 151.669L77.3239 149.793L75.4477 146.26C75.3182 146.016 75.4109 145.714 75.6547 145.584C75.8986 145.455 76.2013 145.547 76.3309 145.791L78.4416 149.765ZM6.4889 1.10476C0.497299 29.0656 -1.48428 60.0851 7.97202 87.1476C17.4166 114.177 38.29 137.316 78.1464 149.522L77.8536 150.478C37.71 138.184 16.5834 114.823 7.02798 87.4774C-2.51572 60.1649 -0.497299 28.9344 5.5111 0.895235L6.4889 1.10476Z" fill="white"/>
+  </svg>
+  `;
+
+  return <SvgXml xml={svgString} />
+};
+
+export default CalanderTolltipArrowSvg;

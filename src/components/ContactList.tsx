@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import {
   View,
@@ -8,27 +10,35 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import { RootStackParamList } from "../navigation/types";
+
+type ContactListNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "ReferFriendForm"
+>;
 
 type Contact = {
   id: string;
   name: string;
-  phone: string;
+  mobileNo: string | number;
   status?: string;
 };
 
 type Props = {
   contacts: Contact[];
-  onPress: (contact: Contact) => void;
+  isTouchableEnabled: boolean;
 };
 
 const { width, height } = Dimensions.get("window");
 
-const ContactList = ({ contacts, onPress }: Props) => {
+const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
+  const navigation = useNavigation<ContactListNavigationProp>();
   const getButtonColor = (status?: string) => {
     switch (status) {
       case "Ongoing":
         return "#483DC4";
       case "Onboarded":
+      case "paid":
         return "#00A74D";
       case "Declined":
         return "#A73200";
@@ -37,37 +47,50 @@ const ContactList = ({ contacts, onPress }: Props) => {
     }
   };
 
-  const renderItem = ({ item }: { item: Contact }) => (
-    <View style={styles.contactContainer}>
-      <View style={styles.contactInfo}>
-        <Image
-          source={require("../../assets/images/download.png")}
-          style={styles.avatar}
-        />
-        <View>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.phone}>{item.phone}</Text>
+  const renderItem = ({ item }: { item: Contact }) => {
+    // console.log(666666, item);
+
+    return (
+      <View style={styles.contactContainer}>
+        <View style={styles.contactInfo}>
+          <Image
+            source={require("../../assets/images/download.png")}
+            style={styles.avatar}
+          />
+          <View>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
+          </View>
         </View>
+        <TouchableOpacity
+          style={[
+            styles.referButton,
+            { backgroundColor: getButtonColor(item.status) },
+          ]}
+          onPress={() => {
+            if (isTouchableEnabled) {
+              navigation.navigate("ReferFriendForm", { contact: item });
+            }
+          }}
+          disabled={!isTouchableEnabled}
+        >
+          <Text style={styles.referButtonText}>
+            {item.status === "paid"
+              ? "Onboarded"
+              : item.status
+              ? item.status
+              : "Refer"}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={[
-          styles.referButton,
-          { backgroundColor: getButtonColor(item.status) },
-        ]}
-        onPress={() => onPress(item)}
-      >
-        <Text style={styles.referButtonText}>
-          {item.status ? item.status : "Refer"}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  };
 
   return (
     <FlatList
       data={contacts}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => item?.id ?? index.toString()}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
     />
   );
@@ -126,6 +149,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.04,
     textAlign: "center",
     color: "#FFFFFF",
+    textTransform: "capitalize",
   },
   separator: {
     height: 1,
