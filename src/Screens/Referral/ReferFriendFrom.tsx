@@ -8,6 +8,7 @@ import CustomGradientButton from "../../Components/CustomGradientButton";
 import { ReferFriendFormstyles as styles } from "./style";
 import { RouteProp } from "@react-navigation/native";
 import { createReferralApi } from "../../Service/ReferralApi/ReferralApiServices";
+import Toast from "react-native-toast-message";
 
 type ReferFriendFormNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -36,19 +37,19 @@ const ReferFriendForm = ({ navigation, route }: Props) => {
       };
       const response = await createReferralApi(referralData);
       // console.log("Referral created successfully:", response.message);
-      ToastAndroid.showWithGravity(
-        response.message,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM
-      );
+      Toast.show({
+        type: 'success',
+        // text1: 'Success',
+        text1: response.message,
+      });
       navigation.goBack();
     } catch (error: any) {
       // console.log("Error creating referral:", error.message);
-      ToastAndroid.showWithGravity(
-        error.message,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM
-      );
+      Toast.show({
+        type: 'info',
+        // text1: '',
+        text1: error.message,
+      });
     }
   };
 
@@ -58,14 +59,12 @@ const ReferFriendForm = ({ navigation, route }: Props) => {
       <View style={styles.screenModalView}>
         <View style={styles.dragHandle} />
         <Text style={styles.title}>Refer your Friend</Text>
-
         <LabeledInput
           label="Name"
           value={name}
           onChangeText={setName}
           placeholder="Enter name"
         />
-
         <LabeledInput
           label="Contact"
           value={contactNumber.toString()}
@@ -73,8 +72,7 @@ const ReferFriendForm = ({ navigation, route }: Props) => {
           keyboardType="phone-pad"
           placeholder="Enter contact"
         />
-
-        <View style={{ marginTop: 15 }}>
+        <View>
           <CustomGradientButton
             title="Save"
             onPress={handleSave}

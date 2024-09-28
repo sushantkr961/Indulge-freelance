@@ -11,7 +11,7 @@ export const ReferFriendFormstyles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.9)",
   },
   screenModalView: {
-    flex: 0.6,
+    flex: height < 700 ? 0.75 : 0.55,
     justifyContent: "flex-start",
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
