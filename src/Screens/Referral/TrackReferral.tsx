@@ -21,13 +21,8 @@ type Referral = {
   name: string;
   phone: string;
   status: string;
-};
-
-type MoneyEarned = {
-  id: string;
-  name: string;
-  phone: string;
-  amount: string;
+  mobileNo: number;
+  totalPrice: number;
 };
 
 const TrackReferral = () => {
@@ -35,7 +30,7 @@ const TrackReferral = () => {
   const [referralsData, setReferralsData] = useState<Referral[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [totalPriceEarned, setTotalPriceEarned] = useState(0);
+  const [totalPriceEarned, setTotalPriceEarned] = useState("");
 
   useEffect(() => {
     const fetchReferrals = async () => {
@@ -43,8 +38,14 @@ const TrackReferral = () => {
         setLoading(true);
         const referredBy = "66702990a7512fefd3cdfb3a";
         const response = await getAllReferralsApi(referredBy);
-        // console.log(4444, response.referrals);
+        console.log(4444, response.referrals);
         setReferralsData(response.referrals);
+        const totalPrice = response.referrals.reduce(
+          (acc: number, referral: Referral) =>
+            acc + (referral?.totalPrice || 0),
+          0
+        );
+        setTotalPriceEarned(totalPrice);
         setLoading(false);
       } catch (err) {
         setError("Failed to load referrals");
@@ -69,13 +70,13 @@ const TrackReferral = () => {
         <View style={styles.topButtonsContainer}>
           <SectionButton
             title="Total Referrals"
-            count={referralsData?.length}
+            count={(referralsData?.length).toString()}
             isActive={activeSection === "totalReferrals"}
             onPress={() => setActiveSection("totalReferrals")}
           />
           <SectionButton
             title="Money Earned"
-            count={totalPriceEarned}
+            count={`₹ ${totalPriceEarned}`}
             isActive={activeSection === "moneyEarned"}
             onPress={() => setActiveSection("moneyEarned")}
           />
@@ -84,7 +85,7 @@ const TrackReferral = () => {
         <Text style={styles.inviteText}>INVITED</Text>
         <View style={styles.contentContainer}>
           {activeSection === "totalReferrals" ? (
-            <ContactList contacts={referralsData} onPress={() => {}} />
+            <ContactList contacts={referralsData} isTouchableEnabled={false} />
           ) : (
             <ContactListBar contacts={referralsData} />
           )}

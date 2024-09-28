@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   View,
@@ -12,23 +13,25 @@ import {
 type Contact = {
   id: string;
   name: string;
-  phone: string;
+  mobileNo: string | number;
   status?: string;
 };
 
 type Props = {
   contacts: Contact[];
-  onPress: (contact: Contact) => void;
+  isTouchableEnabled: boolean;
 };
 
 const { width, height } = Dimensions.get("window");
 
-const ContactList = ({ contacts, onPress }: Props) => {
+const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
+  const navigation = useNavigation();
   const getButtonColor = (status?: string) => {
     switch (status) {
       case "Ongoing":
         return "#483DC4";
       case "Onboarded":
+      case "paid":
         return "#00A74D";
       case "Declined":
         return "#A73200";
@@ -46,7 +49,7 @@ const ContactList = ({ contacts, onPress }: Props) => {
         />
         <View>
           <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.phone}>{item.phone}</Text>
+          <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
         </View>
       </View>
       <TouchableOpacity
@@ -54,10 +57,19 @@ const ContactList = ({ contacts, onPress }: Props) => {
           styles.referButton,
           { backgroundColor: getButtonColor(item.status) },
         ]}
-        onPress={() => onPress(item)}
+        onPress={() => {
+          if (isTouchableEnabled) {
+            navigation.navigate("NewScreen", { contact: item });
+          }
+        }}
+        disabled={!isTouchableEnabled}
       >
         <Text style={styles.referButtonText}>
-          {item.status ? item.status : "Refer"}
+          {item.status === "paid"
+            ? "Onboarded"
+            : item.status
+            ? item.status
+            : "Refer"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -67,7 +79,7 @@ const ContactList = ({ contacts, onPress }: Props) => {
     <FlatList
       data={contacts}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => item?.id ?? index.toString()}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
     />
   );
@@ -126,6 +138,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.04,
     textAlign: "center",
     color: "#FFFFFF",
+    textTransform: "capitalize",
   },
   separator: {
     height: 1,

@@ -6,7 +6,7 @@ import { RootStackParamList } from "../../navigation/types";
 import BackButton from "../../Components/BackButton";
 import SearchBox from "../../Components/SearchBox";
 import ContactList from "../../Components/ContactList";
-import contactsData from "../../data/contact.json";
+import contactsData from "../../data/referralsData.json";
 import { ReferFriendStyles as styles } from "./style";
 
 type HomeScreenNavigationProp = StackNavigationProp<
@@ -18,8 +18,6 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-const { width, height } = Dimensions.get("window");
-
 const ReferFriends = ({ navigation }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredContacts, setFilteredContacts] = useState(contactsData);
@@ -29,19 +27,15 @@ const ReferFriends = ({ navigation }: Props) => {
     if (text === "") {
       setFilteredContacts(contactsData);
     } else {
-      const filtered = contactsData.filter((contact) =>
-        contact.name.toLowerCase().includes(text.toLowerCase())
-      );
+      const filtered = contactsData.filter((contact) => {
+        const nameMatch = contact.name
+          .toLowerCase()
+          .includes(text.toLowerCase());
+        const mobileNoMatch = String(contact.mobileNo).includes(text);
+        return nameMatch || mobileNoMatch;
+      });
       setFilteredContacts(filtered);
     }
-  };
-
-  const handlePress = (contact: {
-    id: string;
-    name: string;
-    phone: string;
-  }) => {
-    navigation.navigate("ReferFriendForm", { contact });
   };
 
   return (
@@ -55,7 +49,7 @@ const ReferFriends = ({ navigation }: Props) => {
       <BackButton title="Refer your Friends" />
       <View style={styles.content}>
         <SearchBox onSearch={handleSearch} />
-        <ContactList contacts={filteredContacts} onPress={handlePress} />
+        <ContactList contacts={filteredContacts} isTouchableEnabled={true} />
       </View>
     </SafeAreaView>
   );
