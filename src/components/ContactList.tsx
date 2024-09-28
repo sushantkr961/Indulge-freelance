@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import {
   View,
@@ -9,6 +10,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import { RootStackParamList } from "../navigation/types";
+
+type ContactListNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "ReferFriendForm"
+>;
 
 type Contact = {
   id: string;
@@ -25,7 +32,7 @@ type Props = {
 const { width, height } = Dimensions.get("window");
 
 const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ContactListNavigationProp>();
   const getButtonColor = (status?: string) => {
     switch (status) {
       case "Ongoing":
@@ -40,40 +47,44 @@ const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
     }
   };
 
-  const renderItem = ({ item }: { item: Contact }) => (
-    <View style={styles.contactContainer}>
-      <View style={styles.contactInfo}>
-        <Image
-          source={require("../../assets/images/download.png")}
-          style={styles.avatar}
-        />
-        <View>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
+  const renderItem = ({ item }: { item: Contact }) => {
+    // console.log(666666, item);
+
+    return (
+      <View style={styles.contactContainer}>
+        <View style={styles.contactInfo}>
+          <Image
+            source={require("../../assets/images/download.png")}
+            style={styles.avatar}
+          />
+          <View>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
+          </View>
         </View>
+        <TouchableOpacity
+          style={[
+            styles.referButton,
+            { backgroundColor: getButtonColor(item.status) },
+          ]}
+          onPress={() => {
+            if (isTouchableEnabled) {
+              navigation.navigate("ReferFriendForm", { contact: item });
+            }
+          }}
+          disabled={!isTouchableEnabled}
+        >
+          <Text style={styles.referButtonText}>
+            {item.status === "paid"
+              ? "Onboarded"
+              : item.status
+              ? item.status
+              : "Refer"}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={[
-          styles.referButton,
-          { backgroundColor: getButtonColor(item.status) },
-        ]}
-        onPress={() => {
-          if (isTouchableEnabled) {
-            navigation.navigate("NewScreen", { contact: item });
-          }
-        }}
-        disabled={!isTouchableEnabled}
-      >
-        <Text style={styles.referButtonText}>
-          {item.status === "paid"
-            ? "Onboarded"
-            : item.status
-            ? item.status
-            : "Refer"}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  };
 
   return (
     <FlatList
