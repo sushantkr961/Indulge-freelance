@@ -2,9 +2,9 @@ import apiService from "../Api";
 import { AxiosResponse } from "axios";
 
 export async function getAllReferralsApi(referredBy: string): Promise<any> {
-  try {    
+  try {
     const response: AxiosResponse<any> = await apiService.get(
-      `/api/referral/get-all?referredBy=${referredBy}`
+      `/api/referral/get-all?referedBy=${referredBy}`
     );
     console.log("getAllReferralsApi:: Response:", response);
     return response.data;
@@ -61,7 +61,9 @@ export async function updateReferralApi(
 
 export async function createReferralApi(data: {
   mobileNo: string;
+  name: string;
 }): Promise<any> {
+  console.log("createReferralApi====", data)
   try {
     const response: AxiosResponse<any> = await apiService.post(
       `/api/referral/create`,

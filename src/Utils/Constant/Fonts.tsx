@@ -13,6 +13,8 @@ export const Fonts = {
     LIGHT: Platform.OS == "ios" ? 'JosefinSans-ExtraLight' : 'josefin-sans.light'
 };
 export const FontSize = {
+    F_8: 8,
+    F_9: 9,
     F_10: 10,
     F_11: 11,
     F_12: 12,

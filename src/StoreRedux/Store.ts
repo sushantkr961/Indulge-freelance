@@ -3,10 +3,26 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
+import tagsReducer from './TagsSlice';
+import productReducer from './AllReelsSlice'
+import filterSlice from './FilterSlice';
+import likeReelSlice from './LikeReelSlice';
+import profileNotesSlice from './ProfileNotesSlice';
+import ProfileAddressSlice from './ProfileAddressSlice';
+import AuctionOngoingSlice from './AuctionOngoingSlice';
+import ShopFilterListSlice from './ShopFilterListSlice';
+import ShopProductListSlice from './ShopProductListSlice';
+import TransactionSlice from './TransactionSlice';
+import CalendarNotificationsSlice from './CalendarNotificationsSlice';
+import CartListSlice from './CartListSlice';
 import ProfileDetailsSlice from './ProfileDetailsSlice';
-
-
+import OrderListSlice from './OrderListSlice';
+import ExploreFilterListSlice from './ExploreFilterListSlice';
+import ExploreDataListSlice from './ExploreDataListSlice';
+import DeepLinkingSlice from './DeepLinkingSlice';
+import GetEcomAndExploreCarosalImageSlice from './GetEcomAndExploreCarosalImageSlice'
+import MyCouponSlice from './MyCouponSlice'
+import MyPlansSlice from './MyPlansSlice';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -15,8 +31,26 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  //Add your reducer
-  profileDetails: ProfileDetailsSlice
+  tags: tagsReducer,
+  product: productReducer,
+  filter: filterSlice,
+  likeReel: likeReelSlice,
+  profileNotes: profileNotesSlice,
+  profileAddress: ProfileAddressSlice,
+  auctionOngoing: AuctionOngoingSlice,
+  shopFilterList: ShopFilterListSlice,
+  exploreFilterList: ExploreFilterListSlice,
+  shopProductList: ShopProductListSlice,
+  transactionSlice: TransactionSlice,
+  calendarNotificationsSlice: CalendarNotificationsSlice,
+  cartList: CartListSlice,
+  profileDetails: ProfileDetailsSlice,
+  orderList: OrderListSlice,
+  exploreData: ExploreDataListSlice,
+  deeplinkData: DeepLinkingSlice,
+  carosalImageData: GetEcomAndExploreCarosalImageSlice,
+  myCouponData: MyCouponSlice,
+  myPlans: MyPlansSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

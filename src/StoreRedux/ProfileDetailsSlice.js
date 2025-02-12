@@ -15,6 +15,7 @@ const ProfileDetailsSlice = createSlice({
         region: '',
         currency: '',
         userId: '',
+        fcmToken: '',
         countryCode: '',
         whatspLink: '',
         isWelcomeIsShown: false,
@@ -48,6 +49,9 @@ const ProfileDetailsSlice = createSlice({
         setUserId(state, action) {
             state.userId = action.payload;
         },
+        setFcmToken(state, action) {
+            state.fcmToken = action.payload;
+        },
         setCountryCode(state, action) {
             state.countryCode = action.payload;
         },
@@ -78,7 +82,7 @@ export const {
     setProfileDetailsData, setStatus, setError,
     setMobileNo, setRegion,
     setWalletBalance, setCurrency,
-    setUserId, setCountryCode,
+    setUserId, setFcmToken, setCountryCode,
     setWhatspLink
 } = ProfileDetailsSlice.actions;
 export default ProfileDetailsSlice.reducer;

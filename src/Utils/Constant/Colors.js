@@ -17,6 +17,8 @@ export const colors = {
     BACK_BLUE_DARK: "#1A1A23",
     BLACK_GREY_DIVIDER: "#373737",
     BLUE_DARK_COLOR: "#2A2A34",
+    GREEN_LIGHT_COLOR: "#00A793",
+    GREEN_DARK_COLOR: "#00A74D",
     GREY_DARK_LINE_COLOR: "#566D80",
     GREY_WHITE_TEXT: "#B6B6B6",
     GREY_DARK_TEXT: "#6F6F73",
@@ -24,5 +26,7 @@ export const colors = {
     LIGHT_GREEN: "#4CAF50",
     BUTTON_WHITE_GREY: "#7C7C7C",
     BLUE_DARK: "#0080ff",
+    RED_DARK: "#A73200",
+    YELLOW_LIGHT_BALCK: "#D39F3A26",
     SEMI_TRANSPARENT: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
 }

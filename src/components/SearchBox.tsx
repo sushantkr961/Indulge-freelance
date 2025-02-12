@@ -28,8 +28,12 @@ const SearchBox = ({
         placeholderTextColor="#373737"
         onChangeText={onSearch}
       />
-      <TouchableOpacity>
-        <SearchSvg width={width * 0.06} height={width * 0.06} />
+      <TouchableOpacity style={styles.searchIcon}>
+        {/* <Image
+          source={require("../../assets/images/search.png")}
+          style={styles.icon}
+        /> */}
+        <SearchSvg />
       </TouchableOpacity>
     </View>
   );
@@ -55,5 +59,13 @@ const styles = StyleSheet.create({
     color: "#373737",
     fontFamily: "JosefinSans-Light",
     fontSize: width * 0.04,
+  },
+  searchIcon: {
+    padding: width * 0.02,
+  },
+  icon: {
+    width: width * 0.06,
+    height: width * 0.06,
+    tintColor: "#000000",
   },
 });

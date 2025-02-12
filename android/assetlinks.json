@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.rutu12.IndulgeApplication",
+            "sha256_cert_fingerprints": [
+                "29:66:E6:27:B2:72:30:F9:AF:3B:C5:05:4D:73:6D:E1:DD:1C:24:11:1B:2D:13:72:3A:94:9C:AF:76:52:21:D6"
+            ]
+        }
+    }
+]

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+// import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import {
   View,
@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { RootStackParamList } from "../navigation/types";
+// import { RootStackParamList } from "../navigation/types";
 
-type ContactListNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "ReferFriendForm"
->;
+// type ContactListNavigationProp = StackNavigationProp<
+//   RootStackParamList,
+//   "ReferFriendForm"
+// >;
 
 type Contact = {
   id: string;
@@ -32,7 +32,7 @@ type Props = {
 const { width, height } = Dimensions.get("window");
 
 const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
-  const navigation = useNavigation<ContactListNavigationProp>();
+  const navigation = useNavigation();
   const getButtonColor = (status?: string) => {
     switch (status) {
       case "Ongoing":
@@ -48,7 +48,6 @@ const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
-    // console.log(666666, item);
 
     return (
       <View style={styles.contactContainer}>
@@ -57,9 +56,9 @@ const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
             source={require("../../assets/images/download.png")}
             style={styles.avatar}
           />
-          <View>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.phone}>{`+91 ${item.mobileNo}`}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
+            <Text style={styles.phone}>{item.mobileNo}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -78,8 +77,8 @@ const ContactList = ({ contacts, isTouchableEnabled }: Props) => {
             {item.status === "paid"
               ? "Onboarded"
               : item.status
-              ? item.status
-              : "Refer"}
+                ? item.status
+                : "Refer"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -100,15 +99,17 @@ export default ContactList;
 
 const styles = StyleSheet.create({
   contactContainer: {
-    flex:1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: height * 0.02,
   },
   contactInfo: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    // backgroundColor: 'red',
+
   },
   avatar: {
     width: width * 0.14,
@@ -126,6 +127,8 @@ const styles = StyleSheet.create({
     color: "#D9D9D9",
   },
   phone: {
+    // backgroundColor: 'red',
+    flex: 1,
     fontFamily: "JosefinSans-Light",
     fontSize: width * 0.035,
     fontWeight: "300",
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     color: "#D9D9D9",
   },
   referButton: {
+    // flex: 0.2,
     borderRadius: width * 0.1,
     paddingVertical: height * 0.01,
     paddingHorizontal: width * 0.04,
@@ -147,7 +151,7 @@ const styles = StyleSheet.create({
     fontFamily: "JosefinSans-Regular",
     fontSize: width * 0.03,
     fontWeight: "400",
-    lineHeight: width * 0.04,
+    // lineHeight: width * 0.04,
     textAlign: "center",
     color: "#FFFFFF",
     textTransform: "capitalize",

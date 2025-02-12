@@ -200,7 +200,7 @@ export const EventSuggestedData =
         { id: 0, name: "Birthday", color: "#4161AB" },
         { id: 1, name: "Anniversarys", color: "#00A893" },
         { id: 2, name: "Music", color: "#7A5DB8" },
-        { id: 3, name: "Sport's", color: "#AD4256" },
+        { id: 3, name: "Sports", color: "#AD4256" },
         { id: 4, name: "Other", color: "#BD4000" },
     ]
 export const ShopFilterListData =
